@@ -7,14 +7,11 @@
 const USER_API = 'services/public/cliente.php';
 // Constante para establecer el elemento del contenido principal.
 const MAIN = document.querySelector('main');
-MAIN.style.paddingTop = '75px';
-MAIN.style.paddingBottom = '100px';
 MAIN.classList.add('container');
 // Se establece el título de la página web.
-document.querySelector('title').textContent = 'CoffeeShop - Store';
+document.querySelector('title').textContent = 'StreetWear Drop';
 // Constante para establecer el elemento del título principal.
 const MAIN_TITLE = document.getElementById('mainTitle');
-MAIN_TITLE.classList.add('text-center', 'py-3');
 
 /*  Función asíncrona para cargar el encabezado y pie del documento.
 *   Parámetros: ninguno.
@@ -32,14 +29,17 @@ const loadTemplate = async () => {
                 <header>
                     <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
                         <div class="container">
-                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="50" alt="CoffeeShop"></a>
+                            <a class="navbar-brand" href="index.html"><img src="../../imagenes/Logo_streetwear.jpg" height="50" alt=""></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div class="navbar-nav ms-auto">
-                                    <a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
-                                    <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i> Carrito</a>
+                                <a class="nav-link" href="index.html"></i>Home</a>
+                                <a class="nav-link" href="Man.html"></i>Men</a>
+                                <a class="nav-link" href="women.html"></i>Women</a>
+                                <a class="nav-link" href="kids.html"></i>Kids</a>
+                                <a class="nav-link" href="cart.html"></i>Cart</a>
                                     <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left"></i> Cerrar sesión</a>
                                 </div>
                             </div>
@@ -56,13 +56,17 @@ const loadTemplate = async () => {
             <header>
                 <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
                     <div class="container">
-                        <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="50" alt="CoffeeShop"></a>
+                        <a class="navbar-brand" href="index.html"><img src="../../imagenes/Logo_streetwear.jpg" height="50" ></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav ms-auto">
-                                <a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
+                                <a class="nav-link" href="index.html"></i>Home</a>
+                                <a class="nav-link" href="Man.html"></i>Men</a>
+                                <a class="nav-link" href="women.html"></i>Women</a>
+                                <a class="nav-link" href="kids.html"></i>Kids</a>
+                                <a class="nav-link" href="cart.html"></i>Cart</a>
                                 <a class="nav-link" href="signup.html"><i class="bi bi-person"></i> Crear cuenta</a>
                                 <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
                             </div>
@@ -74,19 +78,33 @@ const loadTemplate = async () => {
     }
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `
-        <footer>
-            <nav class="navbar fixed-bottom bg-body-tertiary">
-                <div class="container">
-                    <div>
-                        <h6>CoffeeShop</h6>
-                        <p><i class="bi bi-c-square"></i> 2018-2024 Todos los derechos reservados</p>
-                    </div>
-                    <div>
-                        <h6>Contáctanos</h6>
-                        <p><i class="bi bi-envelope"></i> dacasoft@outlook.com</p>
-                    </div>
-                </div>
-            </nav>
-        </footer>
+    <footer class="footer mt-auto py-3">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-4">
+                <h5>Navigation</h5>
+                <p>Home</p>
+                <p>Men</p>
+                <p>Women</p>
+                <p>Shoes</p>
+                <p>Caps</p>
+                <p>Kids</p>
+                <p>Accessories</p>
+            </div>
+            
+            <div class="col-md-4">
+                <h5>Talk to us</h5>
+                <p>streetwear_support@gmail.com</p>
+                <p>+503 7581-7784</p>
+            </div>
+            
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <p>@StreetWear_Drop</p>
+            </div>
+        </div>
+    </div>
+</footer>
     `);
 }

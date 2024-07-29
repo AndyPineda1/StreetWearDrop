@@ -2,7 +2,7 @@
 *   CONTROLADOR DE USO GENERAL EN TODAS LAS PÁGINAS WEB.
 */
 // Constante para establecer la ruta base del servidor.
-const SERVER_URL = 'http://localhost/coffeeshop/api/';
+const SERVER_URL = 'http://localhost/StreetWear/api/';
 
 /*
 *   Función para mostrar un mensaje de confirmación.
@@ -65,7 +65,7 @@ const sweetAlert = async (type, text, timer, url = null) => {
         closeOnClickOutside: false,
         closeOnEsc: false,
         button: {
-            text: 'Aceptar'
+            text: 'Accept'
         }
     };
     // Se verifica el uso del temporizador.
@@ -190,7 +190,7 @@ const pieGraph = (canvas, legends, values, title) => {
 */
 const logOut = async () => {
     // Se muestra un mensaje de confirmación y se captura la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Está seguro de cerrar la sesión?');
+    const RESPONSE = await confirmAction('Are you sure that do you want to logOut?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Petición para eliminar la sesión.
@@ -233,3 +233,4 @@ const fetchData = async (filename, action, form = null) => {
         console.log(error);
     }
 }
+
