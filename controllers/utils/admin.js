@@ -11,7 +11,7 @@ MAIN.style.paddingTop = '75px';
 MAIN.style.paddingBottom = '100px';
 MAIN.classList.add('container');
 // Se establece el título de la página web.
-document.querySelector('title').textContent = 'StreetWear - Dashboard';
+document.querySelector('title').textContent = 'Streetweardrop - Dashboard';
 // Constante para establecer el elemento del título principal.
 const MAIN_TITLE = document.getElementById('mainTitle');
 MAIN_TITLE.classList.add('text-center', 'py-3');
@@ -33,7 +33,7 @@ const loadTemplate = async () => {
                     <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
                         <div class="container">
                             <a class="navbar-brand" href="dashboard.html">
-                                <img src="../../resources/img/logo.png" alt="StreetWear" width="50">
+                                <img src="../../resources/img/logo.jpg" alt="Streetweardrop" width="50">
                             </a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -69,12 +69,12 @@ const loadTemplate = async () => {
                     <nav class="navbar fixed-bottom bg-body-tertiary">
                         <div class="container">
                             <div>
-                                <p><a class="nav-link" href="https://github.com/AndyPineda1/StreetWearDrop" target="_blank"><i class="bi bi-github"></i> StreetWear</a></p>
+                                <p><a class="nav-link" href="https://github.com/andypineda1/coffeeshop" target="_blank"><i class="bi bi-github"></i> Streetweardrop</a></p>
                                 <p><i class="bi bi-c-square-fill"></i> 2018-2024 Todos los derechos reservados</p>
                             </div>
                             <div>
                                 <p><a class="nav-link" href="../public/" target="_blank"><i class="bi bi-cart-fill"></i> Sitio público</a></p>
-                                <p><i class="bi bi-envelope-fill"></i> dacasoft@outlook.com</p>
+                                <p><i class="bi bi-envelope-fill"></i> andypineda1@outlook.com</p>
                             </div>
                         </div>
                     </nav>
@@ -103,8 +103,8 @@ const loadTemplate = async () => {
                 <footer>
                     <nav class="navbar fixed-bottom bg-body-tertiary">
                         <div class="container">
-                            <p><a class="nav-link" href="https://github.com/AndyPineda1/StreetWearDrop target="_blank"><i class="bi bi-github"></i> StreetWear</a></p>
-                            <p><i class="bi bi-envelope-fill"></i> dacasoft@outlook.com</p>
+                            <p><a class="nav-link" href="https://github.com/andypineda1/coffeeshop" target="_blank"><i class="bi bi-github"></i> Streetweardrop</a></p>
+                            <p><i class="bi bi-envelope-fill"></i> andypineda1@outlook.com</p>
                         </div>
                     </nav>
                 </footer>

@@ -2,7 +2,7 @@
 *   CONTROLADOR DE USO GENERAL EN TODAS LAS PÁGINAS WEB.
 */
 // Constante para establecer la ruta base del servidor.
-const SERVER_URL = 'http://localhost/StreetWear/api/';
+const SERVER_URL = 'http://localhost/StreetWeardrop/api/';
 
 /*
 *   Función para mostrar un mensaje de confirmación.

@@ -85,18 +85,14 @@ INSERT INTO Distribuidores (id_Distribuidor, nombre_Distribuidor, telefono_Distr
 (1, 'Distribuidor A', '123456789'),
 (2, 'Distribuidor B', '987654321');
 
-CREATE TABLE Categorias (
-    idCategoria INT PRIMARY KEY AUTO_INCREMENT,
-    nombreCategoria VARCHAR(30),
-    descripcionCategoria VARCHAR(200),
-    imagenCategoria VARCHAR(30)
+CREATE TABLE Categoria (
+    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_categoria VARCHAR(30),
+    descripcion_categoria VARCHAR(200),
+    imagen_categoria VARCHAR(30)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO Categorias (idCategoria, nombreCategoria) VALUES
-(1, 'Ropa'),
-(2, 'Zapatos'),
-(3, 'Gorras'),
-(4, 'Accesorios' );
+
 
 CREATE TABLE Secciones (
 idSeccion INT PRIMARY KEY AUTO_INCREMENT,
@@ -130,18 +126,15 @@ CREATE TABLE Productos (
     imagen_producto VARCHAR(30),
     talla_producto VARCHAR(10),
     color_producto VARCHAR(30),
-    idCategoria INT,
+    id_categoria INT,
     id_TipoProducto INT,
     id_Distribuidor INT,
-    FOREIGN KEY (idCategoria) REFERENCES Categorias(idCategoria),
+    FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria),
     FOREIGN KEY (id_TipoProducto) REFERENCES TipoProducto(id_TipoProducto),
     FOREIGN KEY (id_Distribuidor) REFERENCES Distribuidores(id_Distribuidor)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=UTF8_UNICODE_CI;
 
-INSERT INTO Productos (id_producto, nombre_producto, descripcion_producto, precio_producto, cantidad_producto, idCategoria, id_TipoProducto, id_Distribuidor) VALUES
-(1, 'Camiseta azul Nike', 'Buenos zapatos', 30, 50, 1, 1, 1),
-(2, 'Zapatos Nike', 'Buenos zapatos', 30, 30, 2, 2, 2),
-(3, 'Zapatos Jordan', 'Buenos zapatos', 30, 30, 2, 2, 2);
+
 
 -- Trigger funcionalidad filtrado de producto
 CREATE TABLE log_productos (
