@@ -72,8 +72,8 @@ const loadTemplate = async () => {
                     <nav class="navbar fixed-bottom bg-body-tertiary">
                         <div class="container">
                             <div>
-                                <p><a class="nav-link" href="https://github.com/andypineda1/coffeeshop" target="_blank"><i class="bi bi-github"></i> Streetweardrop</a></p>
-                                <p><i class="bi bi-c-square-fill"></i> 2018-2024 Todos los derechos reservados</p>
+                                <p><a class="nav-link" href="https://github.com/andypineda1" target="_blank"><i class="bi bi-github"></i> Streetweardrop</a></p>
+                                <p><i class="bi bi-c-square-fill"></i> 2024 Todos los derechos reservados</p>
                             </div>
                             <div>
                                 <p><a class="nav-link" href="../public/" target="_blank"><i class="bi bi-cart-fill"></i> Sitio público</a></p>
@@ -106,7 +106,7 @@ const loadTemplate = async () => {
                 <footer>
                     <nav class="navbar fixed-bottom bg-body-tertiary">
                         <div class="container">
-                            <p><a class="nav-link" href="https://github.com/andypineda1/coffeeshop" target="_blank"><i class="bi bi-github"></i> Streetweardrop</a></p>
+                            <p><a class="nav-link" href="https://github.com/andypineda1" target="_blank"><i class="bi bi-github"></i> Streetweardrop</a></p>
                             <p><i class="bi bi-envelope-fill"></i> andypineda1@outlook.com</p>
                         </div>
                     </nav>
