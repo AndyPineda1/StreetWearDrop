@@ -9,7 +9,15 @@ if (isset($_GET['action'])) {
     // Se instancia la clase correspondiente.
     $producto = new ProductoData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
-    $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
+    $result = array(
+        'status' => 0,
+        'message' => null,
+        'dataset' => null,
+        'error' => null,
+        'exception' => null,
+        'fileStatus' => null
+    );
+
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
     if (isset($_SESSION['idAdministrador'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
@@ -24,19 +32,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay coincidencias';
                 }
                 break;
+                
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['nombreProducto']) or
-                    !$producto->setDescripcion($_POST['descripcionProducto']) or
-                    !$producto->setPrecio($_POST['precioProducto']) or
-                    !$producto->setExistencias($_POST['existenciasProducto']) or
-                    !$producto->setCategoria($_POST['categoriaProducto']) or
-                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenProducto']) or
-                    !$producto->setTalla($_POST['tallaProducto']) or
-                    !$producto->setColor($_POST['colorProducto']) or
-                    !$producto->setTipoProducto($_POST['tipoProducto']) or
+                    !$producto->setNombre($_POST['nombreProducto']) ||
+                    !$producto->setDescripcion($_POST['descripcionProducto']) ||
+                    !$producto->setPrecio($_POST['precioProducto']) ||
+                    !$producto->setExistencias($_POST['cantidadProducto']) ||
+                    !$producto->setCategoria($_POST['categoriaProducto']) ||
+                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) ||
+                    !$producto->setImagen($_FILES['imagenProducto']) ||
+                    !$producto->setTalla($_POST['tallaProducto']) ||
+                    !$producto->setColor($_POST['colorProducto']) ||
+                    !$producto->setTipoProducto($_POST['tipoProducto']) ||
                     !$producto->setDistribuidor($_POST['distribuidorProducto'])
                 ) {
                     $result['error'] = $producto->getDataError();
@@ -49,6 +58,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
                 }
                 break;
+
             case 'readAll':
                 if ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;
@@ -57,6 +67,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen productos registrados';
                 }
                 break;
+
             case 'readOne':
                 if (!$producto->setId($_POST['idProducto'])) {
                     $result['error'] = $producto->getDataError();
@@ -66,20 +77,21 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Producto inexistente';
                 }
                 break;
+
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idProducto']) or
-                    !$producto->setFilename() or
-                    !$producto->setNombre($_POST['nombreProducto']) or
-                    !$producto->setDescripcion($_POST['descripcionProducto']) or
-                    !$producto->setPrecio($_POST['precioProducto']) or
-                    !$producto->setCategoria($_POST['categoriaProducto']) or
-                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenProducto'], $producto->getFilename()) or
-                    !$producto->setTalla($_POST['tallaProducto']) or
-                    !$producto->setColor($_POST['colorProducto']) or
-                    !$producto->setTipoProducto($_POST['tipoProducto']) or
+                    !$producto->setId($_POST['idProducto']) ||
+                    !$producto->setFilename() ||
+                    !$producto->setNombre($_POST['nombreProducto']) ||
+                    !$producto->setDescripcion($_POST['descripcionProducto']) ||
+                    !$producto->setPrecio($_POST['precioProducto']) ||
+                    !$producto->setCategoria($_POST['categoriaProducto']) ||
+                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) ||
+                    !$producto->setImagen($_FILES['imagenProducto'], $producto->getFilename()) ||
+                    !$producto->setTalla($_POST['tallaProducto']) ||
+                    !$producto->setColor($_POST['colorProducto']) ||
+                    !$producto->setTipoProducto($_POST['tipoProducto']) ||
                     !$producto->setDistribuidor($_POST['distribuidorProducto'])
                 ) {
                     $result['error'] = $producto->getDataError();
@@ -92,9 +104,10 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al modificar el producto';
                 }
                 break;
+
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idProducto']) or
+                    !$producto->setId($_POST['idProducto']) ||
                     !$producto->setFilename()
                 ) {
                     $result['error'] = $producto->getDataError();
@@ -107,6 +120,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al eliminar el producto';
                 }
                 break;
+
             case 'cantidadProductosCategoria':
                 if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
                     $result['status'] = 1;
@@ -114,6 +128,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
             case 'porcentajeProductosCategoria':
                 if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
                     $result['status'] = 1;
@@ -121,18 +136,22 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
+
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
+
         // Se obtiene la excepción del servidor de base de datos por si ocurrió un problema.
         $result['exception'] = Database::getException();
+
         // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('Content-type: application/json; charset=utf-8');
+
         // Se imprime el resultado en formato JSON y se retorna al controlador.
         print(json_encode($result));
     } else {
-        print(json_encode('Acceso denegado'));
+        print(json_encode(array('error' => 'Acceso denegado')));
     }
 } else {
-    print(json_encode('Recurso no disponible'));
+    print(json_encode(array('error' => 'Recurso no disponible')));
 }

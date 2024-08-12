@@ -1,6 +1,9 @@
 // Constantes para completar las rutas de la API.
 const PRODUCTO_API = 'services/admin/producto.php';
 const CATEGORIA_API = 'services/admin/categoria.php';
+const DISTRIBUIDORES_API = 'services/admin/distribuidor.php';
+const TIPO_PRODUCTO_API = 'services/admin/tipoProducto.php';
+
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -15,7 +18,9 @@ const SAVE_FORM = document.getElementById('saveForm'),
     NOMBRE_PRODUCTO = document.getElementById('nombreProducto'),
     DESCRIPCION_PRODUCTO = document.getElementById('descripcionProducto'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
-    EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
+    EXISTENCIAS_PRODUCTO = document.getElementById('cantidadProducto'),
+     TALLA_PRODUCTO = document.getElementById('tallaProducto'),
+     COLOR_PRODUCTO = document.getElementById('colorProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoProducto');
 
 // Método del evento para cuando el documento ha cargado.
@@ -86,7 +91,12 @@ const fillTable = async (form = null) => {
                     <td><img src="${SERVER_URL}images/productos/${row.imagen_producto}" height="50"></td>
                     <td>${row.nombre_producto}</td>
                     <td>${row.precio_producto}</td>
+                    <td>${row.cantidad_producto}</td>
+                    <td>${row.descripcion_producto}</td>
+                    <td>${row.color_producto}</td>
                     <td>${row.nombre_categoria}</td>
+                    <td>${row.nombre_TipoProducto}</td>nombre_Distribuidor
+                    <td>${row.nombre_Distribuidor}</td> 
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_producto})">
@@ -119,6 +129,8 @@ const openCreate = () => {
     SAVE_FORM.reset();
     EXISTENCIAS_PRODUCTO.disabled = false;
     fillSelect(CATEGORIA_API, 'readAll', 'categoriaProducto');
+    fillSelect(TIPO_PRODUCTO_API, 'readAll', 'tipoProducto');
+    fillSelect(DISTRIBUIDORES_API, 'readAll', 'distribuidorProducto');
 }
 
 /*
@@ -149,6 +161,9 @@ const openUpdate = async (id) => {
         EXISTENCIAS_PRODUCTO.value = ROW.existencias_producto;
         ESTADO_PRODUCTO.checked = ROW.estado_producto;
         fillSelect(CATEGORIA_API, 'readAll', 'categoriaProducto', parseInt(ROW.id_categoria));
+        fillSelect(TIPO_PRODUCTO_API, 'readAll', 'tipoProducto', parseInt(ROW.id_TipoProducto));
+        fillSelect(DISTRIBUIDORES_API, 'readAll', 'distribuidorProducto', parseInt(ROW.id_Distribuidor));
+        
     } else {
         sweetAlert(2, DATA.error, false);
     }

@@ -43,6 +43,11 @@ class ProductoHandler
 
     public function createRow()
     {
+        // Verificar que todos los atributos necesarios están definidos
+        if ($this->nombre === null || $this->descripcion === null || $this->precio === null || $this->existencias === null || $this->imagen === null || $this->estado === null || $this->categoria === null || $this->tipoProducto === null || $this->distribuidor === null) {
+            throw new Exception("Faltan datos para crear el producto.");
+        }
+
         $sql = 'INSERT INTO productos(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_tipo_producto, id_distribuidor, talla_producto, color_producto, id_administrador)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $this->tipoProducto, $this->distribuidor, $this->talla, $this->color, $_SESSION['idAdministrador']);
@@ -80,6 +85,11 @@ class ProductoHandler
 
     public function updateRow()
     {
+        // Verificar que todos los atributos necesarios están definidos
+        if ($this->id === null || $this->nombre === null || $this->descripcion === null || $this->precio === null || $this->estado === null || $this->categoria === null || $this->talla === null || $this->color === null || $this->tipoProducto === null || $this->distribuidor === null) {
+            throw new Exception("Faltan datos para actualizar el producto.");
+        }
+
         $sql = 'UPDATE productos
                 SET imagen_producto = ?, nombre_producto = ?, descripcion_producto = ?, precio_producto = ?, estado_producto = ?, id_categoria = ?, talla_producto = ?, color_producto = ?, id_tipo_producto = ?, id_distribuidor = ?
                 WHERE id_producto = ?';

@@ -126,6 +126,7 @@ CREATE TABLE Productos (
     imagen_producto VARCHAR(30),
     talla_producto VARCHAR(10),
     color_producto VARCHAR(30),
+    estado_producto tinyint(1) NOT NULL,
     id_categoria INT,
     id_TipoProducto INT,
     id_Distribuidor INT,
