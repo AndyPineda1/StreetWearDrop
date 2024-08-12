@@ -3,15 +3,14 @@
 require_once('../../helpers/database.php');
 
 /*
- *  Clase para manejar el comportamiento de los datos de la tabla distribuidores.
+ *  Clase para manejar el comportamiento de los datos de la tabla TipoProducto.
  */
-class DistribuidorHandler
+class TipoProductoHandler
 {
     /*
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
-    protected $telefono = null;
     protected $nombre = null;
 
     /*
@@ -24,11 +23,11 @@ class DistribuidorHandler
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_Distribuidor, nombre_Distribuidor, telefono_Distribuidor
-                FROM distribuidores
-                WHERE nombre_Distribuidor LIKE ? OR telefono_Distribuidor LIKE ?
-                ORDER BY nombre_Distribuidor';
-        $params = array($value, $value);
+        $sql = 'SELECT  nombre_TipoProducto
+                FROM TipoProducto
+                WHERE nombre_TipoProducto LIKE ?
+                ORDER BY nombre_TipoProducto';
+        $params = array($value);
         return Database::getRows($sql, $params);
     }
 
@@ -37,9 +36,9 @@ class DistribuidorHandler
     */
     public function createRow()
     {
-        $sql = 'INSERT INTO distribuidores(nombre_Distribuidor, telefono_Distribuidor)
-                VALUES(?, ?)';
-        $params = array($this->nombre, $this->telefono);
+        $sql = 'INSERT INTO TipoProducto(nombre_TipoProducto)
+                VALUES(?)';
+        $params = array($this->nombre);
         return Database::executeRow($sql, $params);
     }
 
@@ -48,9 +47,9 @@ class DistribuidorHandler
     */
     public function readAll()
     {
-        $sql = 'SELECT id_Distribuidor, nombre_Distribuidor, telefono_Distribuidor 
-                FROM distribuidores
-                ORDER BY nombre_Distribuidor';
+        $sql = 'SELECT id_TipoProducto, nombre_TipoProducto 
+                FROM TipoProducto
+                ORDER BY nombre_TipoProducto';
         return Database::getRows($sql);
     }
 
@@ -59,9 +58,9 @@ class DistribuidorHandler
     */
     public function readOne()
     {
-        $sql = 'SELECT nombre_Distribuidor, telefono_Distribuidor
-                FROM distribuidores
-                WHERE id_Distribuidor = ?';
+        $sql = 'SELECT nombre_TipoProducto
+                FROM TipoProducto
+                WHERE id_TipoProducto = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
@@ -71,10 +70,10 @@ class DistribuidorHandler
     */
     public function updateRow()
     {
-        $sql = 'UPDATE distribuidores
-                SET nombre_Distribuidor = ?, telefono_Distribuidor = ?
-                WHERE id_Distribuidor = ?';
-        $params = array($this->nombre, $this->telefono, $this->id);
+        $sql = 'UPDATE TipoProducto
+                SET nombre_TipoProducto = ?
+                WHERE id_TipoProducto = ?';
+        $params = array($this->nombre, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -83,8 +82,8 @@ class DistribuidorHandler
     */
     public function deleteRow()
     {
-        $sql = 'DELETE FROM distribuidores
-                WHERE id_Distribuidor = ?';
+        $sql = 'DELETE FROM TipoProducto
+                WHERE id_TipoProducto = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

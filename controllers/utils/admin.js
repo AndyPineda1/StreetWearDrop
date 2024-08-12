@@ -47,6 +47,9 @@ const loadTemplate = async () => {
                                         <a class="nav-link" href="categoria.html">Categorías</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" href="tipoProducto.html">Tipo Producto</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="distribuidor.html">Distribuidores</a>
                                     </li>
                                     <li class="nav-item">

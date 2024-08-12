@@ -3,6 +3,7 @@
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
 require_once('../../models/handler/producto_handler.php');
+
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
@@ -73,7 +74,7 @@ class ProductoData extends ProductoHandler
             $this->existencias = $value;
             return true;
         } else {
-            $this->data_error = 'Las existencias debe ser un número entero positivo';
+            $this->data_error = 'Las existencias deben ser un número entero positivo';
             return false;
         }
     }
@@ -113,6 +114,51 @@ class ProductoData extends ProductoHandler
             return true;
         } else {
             $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+
+    // New methods for the additional fields
+    public function setTalla($value, $min = 1, $max = 10)
+    {
+        if (Validator::validateLength($value, $min, $max)) {
+            $this->talla = $value;
+            return true;
+        } else {
+            $this->data_error = 'La talla debe tener una longitud entre ' . $min . ' y ' . $max;
+            return false;
+        }
+    }
+
+    public function setColor($value, $min = 1, $max = 30)
+    {
+        if (Validator::validateLength($value, $min, $max)) {
+            $this->color = $value;
+            return true;
+        } else {
+            $this->data_error = 'El color debe tener una longitud entre ' . $min . ' y ' . $max;
+            return false;
+        }
+    }
+
+    public function setTipoProducto($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->tipoProducto = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del tipo de producto es incorrecto';
+            return false;
+        }
+    }
+
+    public function setDistribuidor($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->distribuidor = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del distribuidor es incorrecto';
             return false;
         }
     }

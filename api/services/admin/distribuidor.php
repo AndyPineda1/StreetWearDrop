@@ -1,17 +1,24 @@
 <?php
+// Se incluye la clase del modelo.
 require_once('../../models/data/distribuidor_data.php');
 
+// Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
+    // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
-    $Distribuidor = new DistribuidorData;
+    // Se instancia la clase correspondiente.
+    $distribuidor = new DistribuidorData;
+    // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
-
+    
+    // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
     if (isset($_SESSION['idAdministrador'])) {
+        // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
                 if (!Validator::validateSearch($_POST['search'])) {
                     $result['error'] = Validator::getSearchError();
-                } elseif ($result['dataset'] = $Distribuidor->searchRows()) {
+                } elseif ($result['dataset'] = $distribuidor->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -21,11 +28,11 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$Distribuidor->setNombre($_POST['nombreDistribuidor']) or
-                    !$Distribuidor->setTelefono($_POST['telefonoDistribuidor'])
+                    !$distribuidor->setNombre($_POST['nombreDistribuidor']) ||
+                    !$distribuidor->setTelefono($_POST['telefonoDistribuidor'])
                 ) {
-                    $result['error'] = $Distribuidor->getDataError();
-                } elseif ($Distribuidor->createRow()) {
+                    $result['error'] = $distribuidor->getDataError();
+                } elseif ($distribuidor->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Distribuidor creado correctamente';
                 } else {
@@ -33,7 +40,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $Distribuidor->readAll()) {
+                if ($result['dataset'] = $distribuidor->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
@@ -41,9 +48,11 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                if (!$Distribuidor->setId($_POST['idDistribuidor'])) {
-                    $result['error'] = $Distribuidor->getDataError();
-                } elseif ($result['dataset'] = $Distribuidor->readOne()) {
+                if (!isset($_POST['idDistribuidor'])) {
+                    $result['error'] = 'ID del distribuidor no proporcionado';
+                } elseif (!$distribuidor->setId($_POST['idDistribuidor'])) {
+                    $result['error'] = $distribuidor->getDataError();
+                } elseif ($result['dataset'] = $distribuidor->readOne()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Distribuidor inexistente';
@@ -52,12 +61,12 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$Distribuidor->setId($_POST['idDistribuidor']) or
-                    !$Distribuidor->setNombre($_POST['nombreDistribuidor']) or
-                    !$Distribuidor->setTelefono($_POST['telefonoDistribuidor'])
+                    !$distribuidor->setId($_POST['idDistribuidor']) ||
+                    !$distribuidor->setNombre($_POST['nombreDistribuidor']) ||
+                    !$distribuidor->setTelefono($_POST['telefonoDistribuidor'])
                 ) {
-                    $result['error'] = $Distribuidor->getDataError();
-                } elseif ($Distribuidor->updateRow()) {
+                    $result['error'] = $distribuidor->getDataError();
+                } elseif ($distribuidor->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Distribuidor modificado correctamente';
                 } else {
@@ -65,25 +74,36 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'deleteRow':
-                if (!$Distribuidor->setId($_POST['idDistribuidor'])) {
-                    $result['error'] = $Distribuidor->getDataError();
-                } elseif ($Distribuidor->deleteRow()) {
+                if (!isset($_POST['idDistribuidor'])) {
+                    $result['error'] = 'ID del distribuidor no proporcionado';
+                } elseif (!$distribuidor->setId($_POST['idDistribuidor'])) {
+                    $result['error'] = $distribuidor->getDataError();
+                } elseif ($distribuidor->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Distribuidor eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el distribuidor';
                 }
                 break;
+                
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
 
-        $result['exception'] = Database::getException();
+        // Se obtiene la excepción del servidor de base de datos por si ocurrió un problema.
+        $exception = Database::getException();
+        if ($exception) {
+            $result['exception'] = $exception;
+        }
+
+        // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('Content-type: application/json; charset=utf-8');
-        print(json_encode($result));
+        // Se imprime el resultado en formato JSON y se retorna al controlador.
+        echo json_encode($result);
     } else {
-        print(json_encode('Acceso denegado'));
+        echo json_encode(array('error' => 'Acceso denegado'));
     }
 } else {
-    print(json_encode('Recurso no disponible'));
+    echo json_encode(array('error' => 'Recurso no disponible'));
 }
+?>

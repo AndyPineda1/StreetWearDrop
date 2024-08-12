@@ -1,32 +1,24 @@
 <!DOCTYPE html>
-<!-- Declaración del idioma para el documento -->
 <html lang="es">
 
 <head>
-    <!-- Título del documento -->
-    <title>productos</title>
-    <!-- Metadatos de la página web -->
+    <title>Productos</title>
     <meta charset="utf-8">
+    <meta name="author" content="Daniel Carranza">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
-    <!-- Llamada al icono de la página web -->
-    <link type="image/png" rel="icon" href="../../api/images/logo.jpg">
-    <!-- Llamada a las hojas de estilos del framework e iconos -->
+    <link type="image/png" rel="icon" href="../../resources/img/logo.jpg">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 </head>
 
 <body>
-    <!-- Contenido principal del documento -->
     <main>
-        <!-- Título del contenido principal -->
-        <h3 id="mainTitle"></h3>
+        <h3 id="mainTitle">Gestión de Productos</h3>
         <div class="row">
-            <!-- Formulario de búsqueda -->
             <form class="col-sm-12 col-md-6" id="searchForm">
                 <div class="row">
                     <div class="col-6">
-                        <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                        <input type="search" class="form-control" name="search" placeholder="Buscar producto" required>
                     </div>
                     <div class="col-6">
                         <button type="submit" class="btn btn-success">
@@ -39,34 +31,25 @@
                 </div>
             </form>
             <div class="col-sm-12 col-md-6 text-end">
-                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
                     <i class="bi bi-plus-square-fill"></i>
-                </button>
-                <!-- Botón para abrir un reporte en formato PDF -->
-                <button type="button" class="btn btn-warning" onclick="openReport()">
-                    <i class="bi bi-file-earmark-pdf-fill"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Tabla para mostrar los registros existentes -->
         <table class="table table-hover">
-            <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
             <thead>
                 <tr>
-                    <td colspan="6" id="rowsFound"></td>
+                    <td colspan="5" id="rowsFound"></td>
                 </tr>
                 <tr>
-                    <th>IMAGEN</th>
-                    <th>NOMBRE</th>
-                    <th>PRECIO (US$)</th>
-                    <th>CATEGORÍA</th>
-                    <th>ESTADO</th>
-                    <th>ACCIONES</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
-            <!-- Cuerpo de la tabla para mostrar un registro por fila -->
             <tbody id="tableBody"></tbody>
         </table>
 
@@ -76,13 +59,11 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <h1 class="modal-title fs-5" id="modalTitle">Guardar Producto</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <!-- Formulario para crear o actualizar un registro -->
                     <form id="saveForm">
                         <div class="modal-body row g-3">
-                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="number" class="d-none" id="idProducto" name="idProducto">
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreProducto" class="form-label">Nombre</label>
@@ -95,14 +76,22 @@
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="precioProducto" class="form-label">Precio (US$)</label>
-                                <input id="precioProducto" type="number" name="precioProducto" min="0.01" step="0.01"
+                                <label for="precioProducto" class="form-label">Precio</label>
+                                <input id="precioProducto" type="number" step="0.01" name="precioProducto"
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="existenciasProducto" class="form-label">Existencias</label>
-                                <input id="existenciasProducto" type="number" name="existenciasProducto" min="1"
-                                    step="1" class="form-control" required>
+                                <label for="cantidadProducto" class="form-label">Cantidad</label>
+                                <input id="cantidadProducto" type="number" name="cantidadProducto"
+                                    class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="tallaProducto" class="form-label">Talla</label>
+                                <input id="tallaProducto" type="text" name="tallaProducto" class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="colorProducto" class="form-label">Color</label>
+                                <input id="colorProducto" type="text" name="colorProducto" class="form-control">
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="categoriaProducto" class="form-label">Categoría</label>
@@ -110,14 +99,14 @@
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="imagenProducto" class="form-label">Imagen</label>
-                                <input id="imagenProducto" type="file" name="imagenProducto" class="form-control"
-                                    accept=".png, .jpg">
+                                <label for="tipoProducto" class="form-label">Tipo producto</label>
+                                <select id="tipoProducto" name="tipoProducto" class="form-select" required>
+                                </select>
                             </div>
-                            <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input" type="checkbox" id="estadoProducto"
-                                    name="estadoProducto" checked>
-                                <label class="form-check-label" for="estadoProducto">Estado</label>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="distribuidorProducto" class="form-label">Distribuidor</label>
+                                <select id="distribuidorProducto" name="distribuidorProducto" class="form-select" required>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -128,15 +117,10 @@
             </div>
         </div>
     </main>
-    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
-    <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
-    <!-- Llamada al controlador general de la aplicación -->
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
-    <!-- Llamada al controlador del sitio privado -->
     <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
-    <!-- Llamada al controlador de la página web -->
     <script type="text/javascript" src="../../controllers/admin/producto.js"></script>
 </body>
 

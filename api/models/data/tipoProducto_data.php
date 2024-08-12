@@ -2,21 +2,21 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/distribuidor_handler.php');
+require_once('../../models/handler/tipoProducto_handler.php');
 
 /*
- *	Clase para manejar el encapsulamiento de los datos de la tabla DISTRIBUIDOR.
+ * Clase para manejar el encapsulamiento de los datos de la tabla TIPO_PRODUCTO.
  */
-class DistribuidorData extends DistribuidorHandler
+class TipoProductoData extends TipoProductoHandler
 {
     /*
-     *  Atributos adicionales.
+     * Atributos adicionales.
      */
-    private $data_error = null;
     private $filename = null;
+    private $data_error = null;
 
     /*
-     *   Métodos para validar y establecer los datos.
+     * Métodos para validar y establecer los datos.
      */
 
     // Método para establecer y validar el ID.
@@ -31,19 +31,7 @@ class DistribuidorData extends DistribuidorHandler
         }
     }
 
-    // Método para establecer y validar el número de teléfono.
-    public function setTelefono($value, $min = 2, $max = 15)
-    {
-        if (Validator::validatePhone($value)) {
-            $this->telefono = $value;
-            return true;
-        } else {
-            $this->data_error = 'El número de teléfono es incorrecto';
-            return false;
-        }
-    }
-
-    // Método para establecer y validar el nombre.
+    // Método para establecer y validar el nombre del tipo de producto.
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (Validator::validateAlphabetic($value) && Validator::validateLength($value, $min, $max)) {
@@ -56,7 +44,7 @@ class DistribuidorData extends DistribuidorHandler
     }
 
     /*
-     *  Métodos para obtener los atributos adicionales.
+     * Métodos para obtener los atributos adicionales.
      */
     public function getDataError()
     {
@@ -68,3 +56,4 @@ class DistribuidorData extends DistribuidorHandler
         return $this->filename;
     }
 }
+?>

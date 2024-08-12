@@ -1,9 +1,8 @@
-// Constantes para completar las rutas de la API de PRODUCTO.
-const DISTRIBUIDORES_API = 'services/admin/distribuidor.php';
-
+// Constantes para completar las rutas de la API de TIPO DE PRODUCTO.
+const TIPO_PRODUCTO_API = 'services/admin/tipoProducto.php';
 
 /*
-*Elementos para la tabla PRODUCTOS
+* Elementos para la tabla TIPO DE PRODUCTO
 */
 
 // Constante para establecer el formulario de buscar.
@@ -16,17 +15,15 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_DISTRIBUIDOR = document.getElementById('idDistribuidor'),
-    NOMBRE_DISTRIBUIDOR = document.getElementById('nombreDistribuidor'),
-    TELEFONO_DISTRIBUIDOR = document.getElementById('telefonoDistribuidor');
-
+    ID_TIPO_PRODUCTO = document.getElementById('idTipoProducto'),
+    NOMBRE_TIPO_PRODUCTO = document.getElementById('nombreTipoProducto');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar distribuidor';
+    MAIN_TITLE.textContent = 'Gestionar Tipo de Producto';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -46,11 +43,11 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Se verifica la acción a realizar.
-    (ID_DISTRIBUIDOR.value) ? action = 'updateRow' : action = 'createRow';
+    const action = (ID_TIPO_PRODUCTO.value) ? 'updateRow' : 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(DISTRIBUIDORES_API, action, FORM);
+    const DATA = await fetchData(TIPO_PRODUCTO_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
@@ -74,9 +71,9 @@ const fillTable = async (form = null) => {
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const action = (form) ? 'searchRows' : 'readAll';
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(DISTRIBUIDORES_API, action, form);
+    const DATA = await fetchData(TIPO_PRODUCTO_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -84,14 +81,13 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.nombre_Distribuidor}</td>
-                    <td>${row.telefono_Distribuidor}</td>                    
+                    <td>${row.nombre_TipoProducto}</td>                    
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_Distribuidor})">
-                        <i class="bi bi-pencil-fill"></i>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_TipoProducto})">
+                            <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_Distribuidor})">
-                        <i class="bi bi-trash-fill"></i>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_TipoProducto})">
+                            <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
                 </tr>
@@ -112,7 +108,7 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Crear distribuidor';
+    MODAL_TITLE.textContent = 'Crear Tipo de Producto';
     // Se prepara el formulario.
     SAVE_FORM.reset();
 }
@@ -125,21 +121,20 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idDistribuidor', id);
+    FORM.append('idTipoProducto', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(DISTRIBUIDORES_API, 'readOne', FORM);
+    const DATA = await fetchData(TIPO_PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar laboratorio';
+        MODAL_TITLE.textContent = 'Actualizar Tipo de Producto';
         // Se prepara el formulario.
         SAVE_FORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_DISTRIBUIDOR.value = ROW.id_Distribuidor;
-        NOMBRE_DISTRIBUIDOR.value = ROW.nombre_Distribuidor;
-        TELEFONO_DISTRIBUIDOR.value = ROW.telefono_Distribuidor;
+        ID_TIPO_PRODUCTO.value = ROW.id_TipoProducto;
+        NOMBRE_TIPO_PRODUCTO.value = ROW.nombre_TipoProducto;
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -152,14 +147,14 @@ const openUpdate = async (id) => {
 */
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea eliminar el distribuidor de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea eliminar el tipo de producto de forma permanente?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idDistribuidor', id);
+        FORM.append('idTipoProducto', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(DISTRIBUIDORES_API, 'deleteRow', FORM);
+        const DATA = await fetchData(TIPO_PRODUCTO_API, 'deleteRow', FORM);
         console.log(DATA);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
@@ -172,20 +167,3 @@ const openDelete = async (id) => {
         }
     }
 }
-
-
-
-
-
-/*
-*   Función para abrir un reporte automático de productos por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
-/*
-const openReport = () => {
-    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
-    const PATH = new URL(`${SERVER_URL}reports/admin/productos.php`);
-    // Se abre el reporte en una nueva pestaña.
-    window.open(PATH.href);
-}*/

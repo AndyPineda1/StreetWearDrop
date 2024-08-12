@@ -76,7 +76,7 @@ INSERT INTO Clientes (nombre_cliente, apellido_cliente, numero_cliente, correo_c
 SELECT*FROM Clientes;
 	
 CREATE TABLE Distribuidores (
-    id_Distribuidor INT PRIMARY KEY,
+    id_Distribuidor INT AUTO_INCREMENT PRIMARY KEY,
     nombre_Distribuidor VARCHAR(50),
     telefono_Distribuidor VARCHAR(20)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -107,7 +107,7 @@ INSERT INTO Secciones (idSeccion, nombreSeccion) VALUES
 (3, 'Ninos');
 
 CREATE TABLE TipoProducto (
-    id_TipoProducto INT PRIMARY KEY,
+    id_TipoProducto INT AUTO_INCREMENT PRIMARY KEY,
     nombre_TipoProducto VARCHAR(30)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
