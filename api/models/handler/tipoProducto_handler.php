@@ -87,5 +87,18 @@ class TipoProductoHandler
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
+
+    /*
+    *   Métodos para generar reportes.
+    */
+    public function tipoProducto()
+    {
+        $sql = 'SELECT p.id_producto, p.nombre_producto, p.precio_producto, p.estado_producto
+        FROM Productos p
+        WHERE p.id_TipoProducto = ?
+        ORDER BY p.nombre_producto';
+       $params = array($this->id);
+       return Database::getRows($sql, $params);
+    }
 }
 ?>
