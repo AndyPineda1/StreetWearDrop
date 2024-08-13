@@ -95,8 +95,8 @@ const fillTable = async (form = null) => {
                     <td>${row.descripcion_producto}</td>
                     <td>${row.color_producto}</td>
                     <td>${row.nombre_categoria}</td>
-                    <td>${row.nombre_TipoProducto}</td>nombre_Distribuidor
-                    <td>${row.nombre_Distribuidor}</td> 
+                    <td>${row.nombre_tipo_producto}</td>nombre_Distribuidor
+                    <td>${row.nombre_distribuidor}</td> 
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_producto})">
