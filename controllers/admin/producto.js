@@ -158,7 +158,7 @@ const openUpdate = async (id) => {
         NOMBRE_PRODUCTO.value = ROW.nombre_producto;
         DESCRIPCION_PRODUCTO.value = ROW.descripcion_producto;
         PRECIO_PRODUCTO.value = ROW.precio_producto;
-        EXISTENCIAS_PRODUCTO.value = ROW.existencias_producto;
+        EXISTENCIAS_PRODUCTO.value = ROW.cantidad_producto;
         ESTADO_PRODUCTO.checked = ROW.estado_producto;
         fillSelect(CATEGORIA_API, 'readAll', 'categoriaProducto', parseInt(ROW.id_categoria));
         fillSelect(TIPO_PRODUCTO_API, 'readAll', 'tipoProducto', parseInt(ROW.id_TipoProducto));

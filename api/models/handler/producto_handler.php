@@ -27,6 +27,23 @@ class ProductoHandler
     const RUTA_IMAGEN = '../../images/productos/';
 
     /*
+    *   Método para validar si los atributos necesarios están definidos.
+    */
+    private function validateAttributes($isUpdate = false)
+    {
+        if ($isUpdate && $this->id === null) {
+            throw new Exception("El ID del producto es necesario para la actualización.");
+        }
+
+        if ($this->nombre === null || $this->descripcion === null || $this->precio === null || 
+            $this->existencias === null || $this->estado === null || $this->categoria === null || 
+            $this->tipoProducto === null || $this->distribuidor === null || $this->talla === null || 
+            $this->color === null) {
+            throw new Exception("Faltan datos para realizar la operación en el producto.");
+        }
+    }
+
+    /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
     public function searchRows()
@@ -43,31 +60,60 @@ class ProductoHandler
 
     public function createRow()
     {
-        // Verificar que todos los atributos necesarios están definidos
-        if ($this->nombre === null || $this->descripcion === null || $this->precio === null || $this->existencias === null || $this->imagen === null || $this->estado === null || $this->categoria === null || $this->tipoProducto === null || $this->distribuidor === null) {
-            throw new Exception("Faltan datos para crear el producto.");
-        }
+        $this->validateAttributes();
 
-        $sql = 'INSERT INTO productos(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_tipo_producto, id_distribuidor, talla_producto, color_producto, id_administrador)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $this->tipoProducto, $this->distribuidor, $this->talla, $this->color, $_SESSION['idAdministrador']);
+        $sql = 'INSERT INTO productos(nombre_producto, cantidad_producto, descripcion_producto, precio_producto, imagen_producto, talla_producto, color_producto, estado_producto, id_categoria, id_TipoProducto, id_Distribuidor)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $params = array(
+            $this->nombre,
+            $this->existencias,
+            $this->descripcion,
+            $this->precio,
+            $this->imagen,
+            $this->talla,
+            $this->color,
+            $this->estado,
+            $this->categoria,
+            $this->tipoProducto,
+            $this->distribuidor
+        );
+
         return Database::executeRow($sql, $params);
     }
 
     public function readAll()
-    {
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre_categoria, estado_producto, talla_producto, color_producto, nombre_tipo_producto, nombre_distribuidor
-                FROM productos
-                INNER JOIN categoria USING(id_categoria)
-                INNER JOIN tipo_producto USING(id_tipo_producto)
-                INNER JOIN distribuidor USING(id_distribuidor)
-                ORDER BY nombre_producto';
-        return Database::getRows($sql);
-    }
+{
+    $sql = 'SELECT 
+                p.id_producto, 
+                p.imagen_producto, 
+                p.nombre_producto, 
+                p.descripcion_producto, 
+                p.precio_producto, 
+                p.cantidad_producto,
+                p.talla_producto,
+                p.color_producto,
+                COALESCE(c.nombre_categoria, "No disponible") AS nombre_categoria, 
+                COALESCE(tp.nombre_TipoProducto, "No disponible") AS nombre_tipo_producto, 
+                COALESCE(d.nombre_Distribuidor, "No disponible") AS nombre_distribuidor, 
+                p.estado_producto
+            FROM 
+                Productos p
+            LEFT JOIN 
+                Categoria c ON p.id_categoria = c.id_categoria
+            LEFT JOIN 
+                TipoProducto tp ON p.id_TipoProducto = tp.id_TipoProducto
+            LEFT JOIN 
+                Distribuidores d ON p.id_Distribuidor = d.id_Distribuidor
+            ORDER BY 
+                p.nombre_producto';
+
+    return Database::getRows($sql);
+}
+
 
     public function readOne()
     {
-        $sql = 'SELECT id_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto, talla_producto, color_producto, id_tipo_producto, id_distribuidor
+        $sql = 'SELECT id_producto, nombre_producto, descripcion_producto, precio_producto, cantidad_producto, imagen_producto, id_categoria, estado_producto, talla_producto, color_producto, id_TipoProducto, id_distribuidor
                 FROM productos
                 WHERE id_producto = ?';
         $params = array($this->id);
@@ -85,15 +131,26 @@ class ProductoHandler
 
     public function updateRow()
     {
-        // Verificar que todos los atributos necesarios están definidos
-        if ($this->id === null || $this->nombre === null || $this->descripcion === null || $this->precio === null || $this->estado === null || $this->categoria === null || $this->talla === null || $this->color === null || $this->tipoProducto === null || $this->distribuidor === null) {
-            throw new Exception("Faltan datos para actualizar el producto.");
-        }
+        $this->validateAttributes(true);
 
         $sql = 'UPDATE productos
-                SET imagen_producto = ?, nombre_producto = ?, descripcion_producto = ?, precio_producto = ?, estado_producto = ?, id_categoria = ?, talla_producto = ?, color_producto = ?, id_tipo_producto = ?, id_distribuidor = ?
+                SET nombre_producto = ?, descripcion_producto = ?, precio_producto = ?, cantidad_producto = ?, imagen_producto = ?, estado_producto = ?, id_categoria = ?, talla_producto = ?, color_producto = ?, id_TipoProducto = ?, id_Distribuidor = ?
                 WHERE id_producto = ?';
-        $params = array($this->imagen, $this->nombre, $this->descripcion, $this->precio, $this->estado, $this->categoria, $this->talla, $this->color, $this->tipoProducto, $this->distribuidor, $this->id);
+        $params = array(
+            $this->nombre,
+            $this->descripcion,
+            $this->precio,
+            $this->existencias,
+            $this->imagen,
+            $this->estado,
+            $this->categoria,
+            $this->talla,
+            $this->color,
+            $this->tipoProducto,
+            $this->distribuidor,
+            $this->id
+        );
+
         return Database::executeRow($sql, $params);
     }
 
@@ -107,7 +164,7 @@ class ProductoHandler
 
     public function readProductosCategoria()
     {
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
+        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, cantidad_producto
                 FROM productos
                 INNER JOIN categoria USING(id_categoria)
                 WHERE id_categoria = ? AND estado_producto = true
@@ -118,10 +175,10 @@ class ProductoHandler
 
     public function readProductosTipo()
     {
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
+        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, cantidad_producto
                 FROM productos
-                INNER JOIN tipo_producto USING(id_tipo_producto)
-                WHERE id_tipo_producto = ? AND estado_producto = true
+                INNER JOIN tipo_producto USING(id_TipoProducto)
+                WHERE id_TipoProducto = ? AND estado_producto = true
                 ORDER BY nombre_producto';
         $params = array($this->tipoProducto);
         return Database::getRows($sql, $params);
@@ -129,7 +186,7 @@ class ProductoHandler
 
     public function readProductosDistribuidor()
     {
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
+        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, cantidad_producto
                 FROM productos
                 INNER JOIN distribuidor USING(id_distribuidor)
                 WHERE id_distribuidor = ? AND estado_producto = true
