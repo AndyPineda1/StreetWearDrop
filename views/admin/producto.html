@@ -34,6 +34,9 @@
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
                     <i class="bi bi-plus-square-fill"></i>
                 </button>
+                 <button type="button" class="btn btn-primary" onclick="openChart()">
+                    <i class="bi bi-bar-chart-line-fill"></i>
+                </button>
             </div>
         </div>
 
@@ -131,7 +134,23 @@
                 </div>
             </div>
         </div>
+        <!-- Componente Modal para mostrar un grafico -->
+        <div class="modal fade" id="chartModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalTitle">Productos más vendidos</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="chartContainer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+    <script type="text/javascript" src="../../resources/js/chart.umd.min.js"></script>
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>

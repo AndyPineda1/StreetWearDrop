@@ -92,13 +92,12 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al eliminar la categoría';
                 }
                 break;
-            case 'readTopProductos':
-                if (!$categoria->setId($_POST['idCategoria'])) {
-                    $result['error'] = $categoria->getDataError();
-                } elseif ($result['dataset'] = $categoria->readTopProductos()) {
+
+            case 'readTopCategories':
+                if ($result['dataset'] = $categoria->readTopCategories()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'No existen productos vendidos por el momento';
+                    $result['error'] = 'No existen categorias vendidas por el momento';
                 }
                 break;
             default:

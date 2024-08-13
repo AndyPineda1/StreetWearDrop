@@ -35,10 +35,12 @@ class ProductoHandler
             throw new Exception("El ID del producto es necesario para la actualización.");
         }
 
-        if ($this->nombre === null || $this->descripcion === null || $this->precio === null || 
-            $this->existencias === null || $this->estado === null || $this->categoria === null || 
-            $this->tipoProducto === null || $this->distribuidor === null || $this->talla === null || 
-            $this->color === null) {
+        if (
+            $this->nombre === null || $this->descripcion === null || $this->precio === null ||
+            $this->existencias === null || $this->estado === null || $this->categoria === null ||
+            $this->tipoProducto === null || $this->distribuidor === null || $this->talla === null ||
+            $this->color === null
+        ) {
             throw new Exception("Faltan datos para realizar la operación en el producto.");
         }
     }
@@ -82,8 +84,8 @@ class ProductoHandler
     }
 
     public function readAll()
-{
-    $sql = 'SELECT 
+    {
+        $sql = 'SELECT 
                 p.id_producto, 
                 p.imagen_producto, 
                 p.nombre_producto, 
@@ -107,8 +109,8 @@ class ProductoHandler
             ORDER BY 
                 p.nombre_producto';
 
-    return Database::getRows($sql);
-}
+        return Database::getRows($sql);
+    }
 
 
     public function readOne()
@@ -216,6 +218,18 @@ class ProductoHandler
         return Database::getRows($sql);
     }
 
+    // Método para gráficar el top 5 de productos más vendidos de una categoría.
+    public function readTopProductos()
+    {
+        $sql = '  SELECT nombre_producto, SUM(dp.cantidad_Producto) total
+                FROM detallepedido dp
+                INNER JOIN productos USING(id_producto)
+                GROUP BY nombre_producto
+                ORDER BY total DESC
+                LIMIT 5';
+        return Database::getRows($sql);
+    }
+
     /*
     *   Métodos para generar reportes.
     */
@@ -230,4 +244,3 @@ class ProductoHandler
         return Database::getRows($sql, $params);
     }
 }
-?>
